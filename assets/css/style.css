@@ -207,7 +207,7 @@ h6 {
   margin: 0px;
   margin-bottom: 15px;
   font-weight: 700;
-  color: #001659;
+  color: #000000;
   text-transform: uppercase;
 }
 
@@ -2656,7 +2656,7 @@ header.header-4 .main-menu ul > li a:hover {
 }
 
 header .header-top-bar {
-  background-color: #001659;
+  background-color: #FF0000;
   padding: 10px 0px;
 }
 
@@ -10812,7 +10812,7 @@ header .header-top-bar .top-social-icons a:hover {
 }
 
 .footer-cta-wrapper .footer-cta-bg-wrapper {
-  background-color: #FF5E14;
+  background-color: #000000;
   padding: 40px;
 }
 
