@@ -1,0 +1,57 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.actions a {
+    text-decoration: none;
+    color: red;
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+
+.actions a:hover {
+    background-color: #007bff;
+    color: #fff;
+}

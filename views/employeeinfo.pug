@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    title Employee Information
+    link(rel="stylesheet" href="employeeinfo.css") 
+    body
+      section.employee-info
+        h2 Employee Information
+        table
+          thead
+            tr
+              th Name
+              th Age
+              th Email
+              th Phone Number
+              th Years of Experience
+              th Title
+              th Daily Wage
+              th Next of Kin
+              th Length of Contract
+          tbody
+            tr
+              td #{user.name}
+              td #{user.age}
+              td #{user.email}
+              td #{user.phonenum}
+              td #{user.yearsofexp}
+              td #{user.title}
+              td #{user.wage}
+              td #{user.nextofKin}
+              td #{user.lenofcontract}
+

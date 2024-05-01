@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    title Add Employee Information
+    link(rel="stylesheet" href="newemployee.css")
+  body
+    form(action="/users/register" method="POST")
+      fieldset
+        legend Employee Information
+        label(for="name") Name:
+          input(type="text" id="name" name="name" required)
+        label(for="age") Age:
+          input(type="number" id="age" name="age" required)
+        label(for="email") Email:
+          input(type="email" id="email" name="email" required)
+        label(for="phonenum") Phone Number:
+          input(type="number" id="phonenum" name="phonenum" required)
+        label(for="yearsofexp") Years of Experience:
+          input(type="number" id="yearsofexp" name="yearsofexp" required)
+        label(for="title") Title:
+          input(type="text" id="title" name="title" required)
+        label(for="wage") Daily Wage:
+          input(type="number" id="wage" name="wage" required)
+        label(for="nextofKin") Next of Kin:
+          input(type="text" id="nextofKin" name="nextofKin" required)
+        label(for="lenofcontract") Length of Contract:
+          input(type="number" id="lenofcontract" name="lenofcontract" required)
+        button(type="submit") Submit

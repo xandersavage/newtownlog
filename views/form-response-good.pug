@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    title User Created Successfully
+    link(rel="stylesheet" href="form-response-good.css")
+  body
+    .container
+      h1 User Created Successfully!
+      p A new user has been created:
+      table
+        thead
+          tr
+            th Name
+            th Email
+            th ID
+        tbody
+          tr
+            td #{ user.name }
+            td #{ user.email }
+            td strong #{ user.id }
+      .actions
+        a(href="/users") View All Users
