@@ -27,16 +27,16 @@ router.post("/users/register", async (req, res) => {
 });
 // _id.toHexString()
 // GET A USER
-router.post("/getemployee", async (req, res) => {
-  const _id = req.body.employee;
+router.get("/getemployee", async (req, res) => {
+  const _id = req.query.id;
   try {
     const user = await User.findById(_id);
     if (!user) {
-      return res.status(404).render("nouser");
+      return res.status(404).send("employee not found");
     }
-    res.render("employeeinfo", { user });
+    res.json(user);
   } catch (e) {
-    res.status(500).render("servererror");
+    res.status(500).send("server error");
   }
 });
 
