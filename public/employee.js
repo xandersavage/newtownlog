@@ -43,5 +43,10 @@ searchForm.addEventListener("submit", function(event) {
       // Visual cues for error state
       errorMessage.style.display = "block";
       errorMessage.style.color = "red"; // Add error color
+
+      // Hide error message after a timeout (optional)
+      setTimeout(() => {
+        errorMessage.style.display = "none";
+      }, 4000); // Hide error message after 3 seconds (adjust as needed)
     });
 });
