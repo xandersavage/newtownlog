@@ -30,5 +30,18 @@ searchForm.addEventListener("submit", function(event) {
     .catch(error => {
       console.error("Error fetching employee info:", error);
       // Handle errors appropriately (e.g., display an error message)
+      const errorMessage = document.querySelector(".error-message");
+
+      // Update error message based on error type (optional)
+      if (error.message === "employee not found") {
+        errorMessage.textContent = "employee not found.";
+      } else {
+        errorMessage.textContent =
+          "An error occurred fetching employee information.";
+      }
+
+      // Visual cues for error state
+      errorMessage.style.display = "block";
+      errorMessage.style.color = "red"; // Add error color
     });
 });
