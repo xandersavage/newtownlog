@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
 const multer = require("multer");
+const uuid = require("uuid-v4");
 const admin = require("firebase-admin"); // Firebase Admin SDK
 
 // Initialize Firebase app
@@ -10,13 +11,14 @@ const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY); // 
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "newtownlog.appspot.com"
+    storageBucket: "gs://newtownlog.appspot.com"
   });
 }
 
 const bucket = admin.storage().bucket(); // Reference to your Firebase Storage bucket
 
-const upload = multer({ dest: "/tmp" }); // Adjust path as needed
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }); // Adjust path as needed
 
 // GET ALL USERS
 router.get("/users", async (req, res) => {
@@ -35,29 +37,60 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
+    //CODE START
+    const metadata = {
+      metadata: {
+        firebaseStorageDownloadTokens: uuid()
+      },
+      contentType: req.file.mimetype,
+      cacheControl: "public, max-age=31536000"
+    };
+
     const file = req.file;
     const fileName = `${Date.now()}-${file.originalname}`; // Generate unique filename
 
-    const filePath = `newtownlog-avatar/${fileName}`; // Adjust path as needed within your bucket
-
-    const uploadStream = bucket.file(filePath).createWriteStream({
-      metadata: {
-        contentType: file.mimetype // Set content type based on uploaded file
-      }
+    const blob = bucket.file(fileName);
+    const blobStream = blob.createWriteStream({
+      metadata: metadata,
+      gzip: true
     });
 
-    const uploadPromise = new Promise((resolve, reject) => {
-      uploadStream.on("error", error => reject(error));
-      uploadStream.on("finish", () => resolve(filePath));
-      file.stream.pipe(uploadStream);
+    blobStream.on("error", err => {
+      return res.status(500).json({ error: "Unable to upload image" });
     });
 
-    const uploadedFilePath = await uploadPromise;
-
-    const downloadUrl = await bucket.file(uploadedFilePath).getSignedUrl({
-      action: "read",
-      expires: "03-09-2450" // Adjust expiration as needed
+    blobStream.on("finish", err => {
+      const imageURL = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      return res.status(201).json({ imageURL });
     });
+
+    blobStream.end(req.file.buffer);
+
+    //CODE END
+
+    // const file = req.file;
+    // const fileName = `${Date.now()}-${file.originalname}`; // Generate unique filename
+
+    // const filePath = `newtownlog-avatar/${fileName}`; // Adjust path as needed within your bucket
+
+    // const uploadStream = bucket.file(filePath).createWriteStream({
+    //   metadata: {
+    //     contentType: file.mimetype // Set content type based on uploaded file
+    //   }
+    // });
+
+    // const uploadPromise = new Promise((resolve, reject) => {
+    //   uploadStream.on("error", error => reject(error));
+    //   uploadStream.on("finish", () => resolve(filePath));
+    //   file.stream.pipe(uploadStream);
+    // });
+
+    // const uploadedFilePath = await uploadPromise;
+
+    // const downloadUrl = await bucket.file(uploadedFilePath).getSignedUrl({
+    //   action: "read",
+    //   expires: "03-09-2450" // Adjust expiration as needed
+    // });
 
     const {
       name,
@@ -81,7 +114,7 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
       wage,
       nextofKin,
       lenofcontract,
-      avatar: downloadUrl // Store download URL in user document
+      avatar: imageURL // Store download URL in user document
     });
 
     await user.save();
