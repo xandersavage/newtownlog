@@ -35,6 +35,9 @@ const userSchema = mongoose.Schema({
   },
   lenofcontract: {
     type: Number
+  },
+  avatar: {
+    type: String
   }
 });
 

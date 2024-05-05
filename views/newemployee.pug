@@ -4,7 +4,7 @@ html(lang="en")
     title Add Employee Information
     link(rel="stylesheet" href="newemployee.css")
   body
-    form(action="/users/register" method="POST")
+    form(action="/users/register" method="POST" enctype="multipart/form-data")
       fieldset
         legend Employee Information
         label(for="name") Name:
@@ -25,4 +25,6 @@ html(lang="en")
           input(type="text" id="nextofKin" name="nextofKin" required)
         label(for="lenofcontract") Length of Contract:
           input(type="number" id="lenofcontract" name="lenofcontract" required)
+        label(for="avatar") Profile Picture:
+          input(type="file" id="avatar" name="avatar" accept="image/*")
         button(type="submit") Submit
