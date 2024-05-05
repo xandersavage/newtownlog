@@ -36,6 +36,7 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
+    const imageURL
 
     //CODE START
     const metadata = {
@@ -60,8 +61,8 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
     });
 
     blobStream.on("finish", err => {
-      console.log(bucket.name, blob.name);
-      const imageURL = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      // console.log(bucket.name, blob.name);
+      imageURL = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
       return res.status(201).json({ imageURL });
     });
 
