@@ -89,7 +89,7 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
     res.status(200).render("form-response-good", { user });
   } catch (error) {
     console.error(error);
-    res.status(500).render("form-response-bad");
+    res.status(500).render("form-response-bad", error);
   }
 });
 // GET A USER
