@@ -5,7 +5,7 @@ const multer = require("multer");
 const admin = require("firebase-admin"); // Firebase Admin SDK
 
 // Initialize Firebase app
-const serviceAccount = require("../newtownlog-firebase-adminsdk-ye84s-ae8b1ccde8"); // Replace with your service account file
+const serviceAccount = require(process.env.GOOGLE_APPLICATION_CREDENTIALS); // Replace with your service account file
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
