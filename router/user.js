@@ -7,9 +7,11 @@ const admin = require("firebase-admin"); // Firebase Admin SDK
 // Initialize Firebase app
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY); // Replace with your service account file
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
 
 const bucket = admin.storage().bucket(); // Reference to your Firebase Storage bucket
 
