@@ -29,7 +29,7 @@ router.get("/users", async (req, res) => {
 });
 
 // CREATE A NEW USER
-app.post("/users/register", upload.single("avatar"), async (req, res) => {
+router.post("/users/register", upload.single("avatar"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
