@@ -14,7 +14,7 @@ searchForm.addEventListener("submit", function(event) {
     .then(data => {
       // Update employee card content with retrieved data
       employeeCard.innerHTML = `
-        <img src="/w3images/team2.jpg" alt="photo" style="width:100%">
+        <img src=${data.avatar}" alt="photo" style="width:100%">
         <h1>${data.name}</h1>
         <p class="title">Email: ${data.email}</p>
         <p class="title">Age: ${data.age}</p>
