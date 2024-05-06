@@ -2,7 +2,6 @@ const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
 const multer = require("multer");
-const uuid = require("uuid-v4");
 import { initializeApp } from "firebase/app";
 import {
   getStorage,
@@ -11,13 +10,6 @@ import {
   uploadBytesResumable
 } from "firebase/storage";
 const config = require("../firebase-config");
-
-// if (!admin.apps.length) {
-//   admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     storageBucket: "gs://newtownlog.appspot.com"
-//   });
-// }
 
 //Initialize a firebase application
 initializeApp(config);
@@ -63,8 +55,8 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
       email,
       phonenum,
       yearsofexp,
-      title,
       wage,
+      title,
       nextofKin,
       lenofcontract
     } = req.body;
@@ -75,8 +67,8 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
       email,
       phonenum,
       yearsofexp,
-      title,
       wage,
+      title,
       nextofKin,
       lenofcontract,
       avatar: downloadURL // Store download URL in user document
@@ -105,7 +97,7 @@ const giveCurrentDateTime = () => {
 router.get("/getemployee", async (req, res) => {
   const _id = req.query.id;
   try {
-    const user = await User.findById(_id);
+    const user = await User.findOne({ userId: _id });
     if (!user) {
       return res.status(404).send("employee not found");
     }
