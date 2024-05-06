@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/user");
+const uuid = require("uuid-v4");
 const router = express.Router();
 const multer = require("multer");
 import { initializeApp } from "firebase/app";
@@ -71,7 +72,10 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
       title,
       nextofKin,
       lenofcontract,
-      avatar: downloadURL // Store download URL in user document
+      avatar: downloadURL, // Store download URL in user document
+      userId: `NTL${uuid()
+        .slice(-6)
+        .toUpperCase()}` //Generate unique id with NTL prefix
     });
 
     await user.save();
