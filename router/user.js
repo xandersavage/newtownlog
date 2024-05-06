@@ -10,7 +10,7 @@ import {
   getDownloadURL,
   uploadBytesResumable
 } from "firebase/storage";
-import config from "../firebase-config";
+const config = require("../firebase-config");
 
 // if (!admin.apps.length) {
 //   admin.initializeApp({
@@ -20,7 +20,7 @@ import config from "../firebase-config";
 // }
 
 //Initialize a firebase application
-initializeApp(config.firebaseConfig);
+initializeApp(config);
 
 // Initialize Cloud Storage and get a reference to the service
 const storage = getStorage();
