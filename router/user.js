@@ -3,13 +3,13 @@ const User = require("../models/user");
 const uuid = require("uuid-v4");
 const router = express.Router();
 const multer = require("multer");
-import { initializeApp } from "firebase/app";
-import {
+const { initializeApp } = require("firebase/app");
+const {
   getStorage,
   ref,
   getDownloadURL,
   uploadBytesResumable
-} from "firebase/storage";
+} = require("firebase/storage");
 const config = require("../firebase-config");
 
 //Initialize a firebase application
@@ -118,6 +118,71 @@ router.get("/users", async (req, res) => {
     res.send(user);
   } catch (error) {
     res.status(500).send();
+  }
+});
+
+// Route to update user data (PATCH request)
+router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
+  try {
+    let downloadURL;
+    if (req.file) {
+      // Handle image uploads
+      const dateTime = giveCurrentDateTime();
+
+      const storageRef = ref(
+        storage,
+        `files/${req.file.originalname + "       " + dateTime}`
+      );
+
+      // Create file metadata including the content type
+      const metadata = {
+        contentType: req.file.mimetype
+      };
+
+      // Upload the file in the bucket storage
+      const snapshot = await uploadBytesResumable(
+        storageRef,
+        req.file.buffer,
+        metadata
+      );
+      //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+
+      // Grab the public url
+      downloadURL = await getDownloadURL(snapshot.ref);
+
+      console.log("File successfully uploaded.");
+    }
+    // Update the rest fields
+    const userId = req.params.id;
+    const updateData = req.body; // Object containing updated fields
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update specific fields based on the request body
+    user.name = updateData.name ? updateData.name : user.name;
+    user.email = updateData.email ? updateData.email : user.email;
+    user.age = updateData.age ? updateData.age : user.age;
+    user.phonenum = updateData.phonenum ? updateData.phonenum : user.phonenum;
+    user.yearsofexp = updateData.name ? updateData.yearsofexp : user.yearsofexp;
+    user.wage = updateData.wage ? updateData.wage : user.wage;
+    user.lenofcontract = updateData.lenofcontract
+      ? updateData.lenofcontract
+      : user.lenofcontract;
+    user.title = updateData.title ? updateData.title : user.title;
+    user.avatar = downloadURL ? downloadURL : user.avatar;
+
+    // Save the updated user document
+    const updatedUser = await user.save();
+
+    res.json({ message: "User data updated successfully" });
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
