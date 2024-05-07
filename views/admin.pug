@@ -1,0 +1,96 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="description", content="")
+    meta(name="author", content="Dashboard")
+    meta(name="keyword", content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina")
+
+    title Newtownlog | Admin Update employee
+    // Bootstrap core CSS
+    link(href="assets/css/bootstrap.css", rel="stylesheet")
+    // External CSS
+    link(href="font-awesome.css", rel="stylesheet")
+    // Internal CSS
+    link(href="style.css", rel="stylesheet")
+    link(href="style-responsive.css", rel="stylesheet")
+    link(href="/css/alerts.css", rel="stylesheet")
+
+  body
+    section#container
+
+      section#main-content
+        section.wrapper
+          h3
+            i.fa.fa-angle-right
+            |  Admin
+
+          // BASIC FORM ELEMENTS
+        each employee in user  
+          div.row.mt
+            div.col-lg-12
+              div.form-panel
+                //- if successmsg
+                //-   div.alert.alert-success.alert-dismissable
+                //-     button.close(type="button", data-dismiss="alert", aria-hidden="true")
+                //-       | ×
+                //-     b Well done!
+                //-     |  #{successmsg}
+
+                //- if errormsg
+                //-   div.alert.alert-danger.alert-dismissable
+                //-     button.close(type="button", data-dismiss="alert", aria-hidden="true")
+                //-       | ×
+                //-     b Oh snap!
+                //-     |  #{errormsg}
+
+                form#complaintform.form-horizontal.style-form(action=`/employee/${employee._id}` method="POST" enctype="multipart/form-data")
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Name
+                    div.col-sm-4
+                      input#updateName(type="text", name="name", required="required", value=`${employee.name}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Age
+                    div.col-sm-4
+                      input#updateName(type="number", name="age", required="required", value=`${employee.age}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Email
+                    div.col-sm-4
+                      input#updateName(type="email", name="email", required="required", value=`${employee.email}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label title
+                    div.col-sm-4
+                      input#updateName(type="text", name="title", required="required", value=`${employee.title}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Phone Number
+                    div.col-sm-4
+                      input#updateName(type="number", name="phonenum", required="required", value=`${employee.phonenum}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Wage(Daily)($/hr)
+                    div.col-sm-4
+                      input#updateName(type="number", name="wage", required="required", value=`${employee.wage}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Length of Contract
+                    div.col-sm-4
+                      input#updateName(type="number", name="lenofcontract", required="required", value=`${employee.lenofcontract}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label Years of Experience
+                    div.col-sm-4
+                      input#updateName(type="number", name="yearsofexp", required="required", value=`${employee.yearsofexp}`, class="form-control")
+
+                  div.form-group
+                    label.col-sm-2.col-sm-2.control-label User Image
+                    div.col-sm-6
+                      input#complainfiles.form-control(type="file", name="avatar", value="", accept="image/*")
+
+                  div.form-group
+                    div.col-sm-10(style="padding-left:25% ")
+                      button.btn.btn-primary(type="submit", name="submit") Submit

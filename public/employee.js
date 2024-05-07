@@ -21,7 +21,7 @@ searchForm.addEventListener("submit", function(event) {
         <p class="title">Title: ${data.title}</p>
         <p class="title">Phone: ${data.phonenum}</p>
         <p class="title">Years of Experience: ${data.yearsofexp}</p>
-        <p class="title">Wage($): ${data.wage}</p>
+        <p class="title">Wage($/hr)(daily): ${data.wage}</p>
         <p class="title">Length of contract(weeks): ${data.lenofcontract}</p>
       `;
       employeeCard.style.display = "block";

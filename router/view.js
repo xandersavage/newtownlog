@@ -2,15 +2,21 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 
-router.get("/employee/:id", async (req, res) => {
-  const user = await User.findById(req.params.id);
+// router.get("/employee/:id", async (req, res) => {
+//   const user = await User.findById(req.params.id);
 
-  res.status(200).render("employeeinfo", user);
-});
+//   res.status(200).render("employeeinfo", user);
+// });
 
 router.get("/newemployee", async (req, res) => {
   res.status(200).render("newemployee");
-})
+});
+
+router.get("/donotshare", async (req, res) => {
+  const user = await User.find({});
+  // console.log(user);
+  res.status(200).render("admin.pug", { user });
+});
 
 // Route for static pages (assuming it's also in the public directory)
 router.get("/about", (req, res) => {
