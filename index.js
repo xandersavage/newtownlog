@@ -5,9 +5,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-mongoose.connect(
-  "mongodb+srv://swankylex:cgOJKYumlgA2QG6k@newtownlog.1en8h4u.mongodb.net/?retryWrites=true&w=majority&appName=newtownlog"
-);
+// mongoose.connect(
+//   "mongodb+srv://swankylex:cgOJKYumlgA2QG6k@newtownlog.1en8h4u.mongodb.net/?retryWrites=true&w=majority&appName=newtownlog"
+// );
 
 const userRouter = require("./router/user");
 const viewRouter = require("./router/view");

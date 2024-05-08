@@ -11,6 +11,7 @@ const {
   uploadBytesResumable
 } = require("firebase/storage");
 const config = require("../firebase-config");
+const connectToDatabase = require("../db/cached-connection");
 
 //Initialize a firebase application
 initializeApp(config);
@@ -24,6 +25,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 // CREATE A NEW USER
 router.post("/users/register", upload.single("avatar"), async (req, res) => {
   try {
+    // Connect to the database
+    const db = await connectToDatabase();
+
     const dateTime = giveCurrentDateTime();
 
     const storageRef = ref(
@@ -78,7 +82,8 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
         .toUpperCase()}` //Generate unique id with NTL prefix
     });
 
-    await user.save();
+    // await user.save();
+    await db.collection("users").insertOne(user); // Use Mongoose with the connection
 
     return res.status(200).render("form-response-good", { user });
   } catch (error) {
@@ -101,7 +106,10 @@ const giveCurrentDateTime = () => {
 router.get("/getemployee", async (req, res) => {
   const _id = req.query.id;
   try {
-    const user = await User.findOne({ userId: _id });
+    // Connect to the database
+    const db = await connectToDatabase();
+    // const user = await User.findOne({ userId: _id });
+    const user = await db.collection("users").findOne({ userId: _id });
     if (!user) {
       return res.status(404).send("employee not found");
     }
@@ -112,18 +120,20 @@ router.get("/getemployee", async (req, res) => {
 });
 
 // GET ALL USERS
-router.get("/users", async (req, res) => {
-  try {
-    const user = await User.find({});
-    res.send(user);
-  } catch (error) {
-    res.status(500).send();
-  }
-});
+// router.get("/users", async (req, res) => {
+//   try {
+//     const user = await User.find({});
+//     res.send(user);
+//   } catch (error) {
+//     res.status(500).send();
+//   }
+// });
 
 // Route to update user data (PATCH request)
 router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
   try {
+    // Connect to the database
+    const db = await connectToDatabase();
     let downloadURL;
     if (req.file) {
       // Handle image uploads
@@ -157,7 +167,8 @@ router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
     const updateData = req.body; // Object containing updated fields
 
     // Find the user by ID
-    const user = await User.findById(userId);
+    // const user = await User.findById(userId);
+    const user = await db.collection("users").findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -177,7 +188,8 @@ router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
     user.avatar = downloadURL ? downloadURL : user.avatar;
 
     // Save the updated user document
-    const updatedUser = await user.save();
+    // const updatedUser = await user.save();
+    await user.save(db);
 
     res.json({ message: "User data updated successfully" });
   } catch (err) {

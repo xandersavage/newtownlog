@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const connectToDatabase = require("../db/cached-connection");
 
 // router.get("/employee/:id", async (req, res) => {
 //   const user = await User.findById(req.params.id);
@@ -13,7 +14,10 @@ router.get("/newemployee", async (req, res) => {
 });
 
 router.get("/donotshare", async (req, res) => {
-  const user = await User.find({});
+  const db = await connectToDatabase();
+
+  // const user = await User.find({});
+  const user = await db.collection("users").find({});
   // console.log(user);
   res.status(200).render("admin.pug", { user });
 });
