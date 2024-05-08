@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 let cachedConnection = null;
 
 // Function to connect to the MongoDB database
-exports.connectToDatabase = async () => {
+const connectToDatabase = async () => {
   if (cachedConnection) {
     // Check if connection is already established and open
     if (cachedConnection.readyState === 1) {

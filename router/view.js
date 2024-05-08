@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
-const { connectToDatabase } = require("../db/cached-connection");
+const connectToDatabase = require("../db/cached-connection");
 
 // router.get("/employee/:id", async (req, res) => {
 //   const user = await User.findById(req.params.id);
