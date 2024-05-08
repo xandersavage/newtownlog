@@ -17,7 +17,7 @@ router.get("/donotshare", async (req, res) => {
   const db = await connectToDatabase();
 
   // const user = await User.find({});
-  const user = await db.collection("users").find({});
+  const user = await db.Collection("users").find({});
   // console.log(user);
   res.status(200).render("admin.pug", { user });
 });

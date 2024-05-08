@@ -84,7 +84,7 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
 
     // await user.save();
     console.log(db);
-    await db.collection("users").insertOne(user); // Use Mongoose with the connection
+    await db.Collection("users").insertOne(user); // Use Mongoose with the connection
 
     return res.status(200).render("form-response-good", { user });
   } catch (error) {
@@ -110,7 +110,7 @@ router.get("/getemployee", async (req, res) => {
     // Connect to the database
     const db = await connectToDatabase();
     // const user = await User.findOne({ userId: _id });
-    const user = await db.collection("users").findOne({ userId: _id });
+    const user = await db.Collection("users").findOne({ userId: _id });
     if (!user) {
       return res.status(404).send("employee not found");
     }
@@ -169,7 +169,7 @@ router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
 
     // Find the user by ID
     // const user = await User.findById(userId);
-    const user = await db.collection("users").findById(userId);
+    const user = await db.Collection("users").findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
