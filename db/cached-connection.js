@@ -19,11 +19,7 @@ const connectToDatabase = async () => {
   console.log("=> using new database connection");
 
   try {
-    const connection = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      bufferCommands: false
-    });
+    const connection = await mongoose.connect(process.env.MONGODB_URI);
 
     cachedConnection = connection;
     return connection;
