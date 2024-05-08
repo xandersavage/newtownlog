@@ -32,3 +32,5 @@ exports.connectToDatabase = async () => {
     //throw error; // Re-throw the error for further handling (optional)
   }
 };
+
+module.exports = connectToDatabase;
