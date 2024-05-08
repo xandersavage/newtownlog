@@ -11,7 +11,7 @@ const {
   uploadBytesResumable
 } = require("firebase/storage");
 const config = require("../firebase-config");
-const connectToDatabase = require("../db/cached-connection");
+const { connectToDatabase } = require("../db/cached-connection");
 
 //Initialize a firebase application
 initializeApp(config);
