@@ -414,8 +414,7 @@ ul.sidebar-menu li a.active i {
 
 /* MAIN CONTENT CONFIGURATION */
 #main-content {
-    margin-left: 150px;
-    margin-right: 150px;
+    margin: 5rem;
 }
 
 .header,
