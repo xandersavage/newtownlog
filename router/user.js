@@ -85,7 +85,7 @@ router.post("/users/register", upload.single("avatar"), async (req, res) => {
     // await user.save();
     const newUser = user.save(db); // Use Mongoose with the connection
 
-    return res.status(200).render("form-response-good", newUser);
+    return res.status(200).render("form-response-good", { user });
   } catch (error) {
     console.error(error);
     res.status(500).render("form-response-bad", { error });
