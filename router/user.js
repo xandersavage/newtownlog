@@ -110,7 +110,7 @@ router.get("/getemployee", async (req, res) => {
     const db = await connectToDatabase();
     // const user = await User.findOne({ userId: _id });
     const user = await db.Collection("users").findOne({ userId: _id });
-    console.log(user);
+    console.log('The user is: ', user);
     if (!user) {
       return res.status(404).send("employee not found");
     }
