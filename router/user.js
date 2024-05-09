@@ -130,7 +130,7 @@ router.get("/getemployee", async (req, res) => {
 //   }
 // });
 
-// Route to update user data (PATCH request)
+// Route to update user data (POST request)
 router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
   try {
     // Connect to the database
@@ -192,10 +192,34 @@ router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
     // const updatedUser = await user.save();
     await user.save(db);
 
-    res.json({ message: "User data updated successfully" });
+    res.json({
+      message: `Employee with ID ${user.userId} updated successfully!`
+    });
   } catch (err) {
     console.error("Error updating user:", err);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// DELETE USER
+router.delete("/employee/:id", async (req, res) => {
+  try {
+    // Connect to the database
+    const db = await connectToDatabase();
+
+    // Find and delete the employee with the given ID
+    const deletedEmployee = await Employee.findByIdAndDelete(req.params.id);
+
+    if (!deletedEmployee) {
+      return res.status(404).send("Employee not found");
+    }
+
+    res.status(200).send({
+      message: `Employee with ID ${deletedEmployee._id} deleted successfully!`
+    });
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    res.status(500).send("Error deleting employee");
   }
 });
 

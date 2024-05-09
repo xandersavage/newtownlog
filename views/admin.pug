@@ -93,4 +93,10 @@ html(lang="en")
 
                   div.form-group
                     div.col-sm-10(style="padding-left:25% ")
-                      button.btn.btn-primary(type="submit", name="submit") Submit
+                      button.btn.btn-primary(type="submit", name="submit") Update User
+
+                form#deleteform(action=`/employee/${employee._id}`, method="POST")
+                  input(type="hidden" name="_method" value="DELETE")
+                  div.form-group
+                    div.col-sm-12(style="text-align: center")
+                      button.btn.btn-danger(type="submit", name="submit") Delete User
