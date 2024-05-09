@@ -110,7 +110,7 @@ router.get("/getemployee", async (req, res) => {
     const db = await connectToDatabase();
     // const user = await User.findOne({ userId: _id });
     const user = await db.Collection("users").findOne({ userId: _id });
-    console.log('The user is: ', user);
+    console.log("The user is: ", user);
     if (!user) {
       return res.status(404).send("employee not found");
     }
@@ -168,8 +168,8 @@ router.post("/employee/:id", upload.single("avatar"), async (req, res) => {
     const updateData = req.body; // Object containing updated fields
 
     // Find the user by ID
-    // const user = await User.findById(userId);
-    const user = await db.Collection("users").findById(userId);
+    const user = await User.findById(userId);
+    // const user = await db.Collection("users").findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
