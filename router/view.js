@@ -14,12 +14,16 @@ router.get("/newemployee", async (req, res) => {
 });
 
 router.get("/donotshare", async (req, res) => {
-  const db = await connectToDatabase();
+  try {
+    const db = await connectToDatabase();
 
-  // const user = await User.find({});
-  const user = await db.Collection("users").find({});
-  // console.log(user);
-  res.status(200).render("admin.pug", { user });
+    const user = await User.find({});
+    // const user = await db.Collection("users").find({});
+    // console.log(user);
+    res.status(200).render("admin.pug", { user });
+  } catch (error) {
+    res.status(500).render({ message: 'error retrieving users' });
+  }
 });
 
 // Route for static pages (assuming it's also in the public directory)
