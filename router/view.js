@@ -9,7 +9,7 @@ const connectToDatabase = require("../db/cached-connection");
 //   res.status(200).render("employeeinfo", user);
 // });
 
-router.get("/newemployee", async (req, res) => {
+router.get("/newemployee", (req, res) => {
   res.status(200).render("newemployee");
 });
 
@@ -22,7 +22,7 @@ router.get("/donotshare", async (req, res) => {
     // console.log(user);
     res.status(200).render("admin.pug", { user });
   } catch (error) {
-    res.status(500).render({ message: 'error retrieving users' });
+    res.status(500).render({ message: "error retrieving users" });
   }
 });
 
