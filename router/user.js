@@ -208,7 +208,7 @@ router.delete("/employee/:id", async (req, res) => {
     const db = await connectToDatabase();
 
     // Find and delete the employee with the given ID
-    const deletedEmployee = await Employee.findByIdAndDelete(req.params.id);
+    const deletedEmployee = await User.findByIdAndDelete(req.params.id);
 
     if (!deletedEmployee) {
       return res.status(404).send("Employee not found");
