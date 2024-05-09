@@ -215,7 +215,7 @@ router.delete("/employee/:id", async (req, res) => {
     }
 
     res.status(200).send({
-      message: `Employee with ID ${deletedEmployee._id} deleted successfully!`
+      message: `Employee with ID ${deletedEmployee.userId} deleted successfully!`
     });
   } catch (error) {
     console.error("Error deleting employee:", error);
